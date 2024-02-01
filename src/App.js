@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { createConnection } from './chat';
 import styles from './index.css';
+import "./App.css"
+
 
 const roomData = {
     facts: {
@@ -17,22 +19,46 @@ const roomData = {
         'Цвет глаз - светло-карие.',
         'Любимый день недели - понедельник.',
         'Любимый мультфильм - Двенадцать танцующих принцесс и Бэмби.',]
-        // imageUrl: 'url_to_facts_image.jpg',
     },
     food: {
-        title: 'Food Room',
-        info: 'Discuss your favorite food and recipes in this room.',
-        imageUrl: 'url_to_food_image.jpg',
+        title: 'My favorite food',
+        info: ['1. Пельмени',
+            '2.Уйгурский лагман',
+            '3.Вареники',
+            '4.Шорпо',
+            '5.Тандырные самсы',
+            '6.Манты с джусаем',
+            '7.Рамён',
+            '8.Плов',
+        ],
     },
     music: {
-        title: 'Music Room',
-        info: 'Talk about your favorite music and artists here.',
-        imageUrl: 'url_to_music_image.jpg',
+        title: 'My favorite music',
+        info: ['1.Sure Thing - Miguel',
+        '2.Chicago - Michael Jackson ' ,
+        '3.All I want is you - Miguel ' ,
+        '4.Целовать другого - Иван Дорн ' ,
+        '5.No scrubs - TLC' ,
+        '6.Опус Магнум - Мот' ,
+        '7.Только у любимой могут быть такие глаза - Ялла',
+        '8.Let it be - JP Cooper ' ,
+        '9.Нет тебя прекрасней - Юрий Антонов ' ,
+        '10.Dive - Ed Sheeran'],
+
     },
     films: {
-        title: 'Films Room',
-        info: 'Share your favorite movies and discuss films in this room.',
-        imageUrl: 'url_to_films_image.jpg',
+        title: 'My favorite films and serials',
+        info: ['1.Запретный плод' ,
+        '2.Красотка' ,
+        '3.Один плюс один' ,
+        '4.Зелёная книга' ,
+        '5.Крёстный отец' ,
+        '6.Мемуары гейши' ,
+        '7.Война роз' ,
+        '8.Гордость и предубеждение' ,
+        '9.Унесённые ветром' ,
+        '10.Движение вверх' ,
+        ],
     },
 }
 
@@ -54,28 +80,31 @@ function ChatRoom({ roomId }) {
                 Server Url:{' '}
                 <input value={serverUrl} onChange={(e) => setServerUrl(e.target.value)} />
             </label>
-            <h1>{currentRoom.title}</h1>
-            <p>{currentRoom.info}</p>
-            <img src={currentRoom.imageUrl} alt={`Image for ${currentRoom.title}`} />
-            {/* Добавьте другие интерактивные элементы или компоненты для каждой комнаты */}
+            <h1 className={"styles"}>{currentRoom.title}</h1>
+            <ul>
+                {currentRoom.info.map(item =>
+                <li>
+                    {item}
+                </li>) }
+            </ul>
         </>
     );
 }
 
 export default function App() {
-    const [roomId, setRoomId] = useState('general');
+    const [roomId, setRoomId] = useState('facts');
     const [show, setShow] = useState(false);
 
 
     return (
-        <>
+        <div className={"App"}>
             <label>
                 Choose the chat room:{' '}
                 <select value={roomId} onChange={(e) => setRoomId(e.target.value)}>
                     <option value="facts">Facts about me</option>
-                    <option value="food">My favorite food</option>
-                    <option value="music">My favorite music</option>
-                    <option value="films">My favorite films</option>
+                    <option value="food">Food room</option>
+                    <option value="music">Music room</option>
+                    <option value="films">Films room</option>
                 </select>
             </label>
             <button onClick={() => setShow(!show)}>
@@ -83,6 +112,6 @@ export default function App() {
             </button>
             {show && <hr />}
             {show && <ChatRoom roomId={roomId} />}
-        </>
+        </div>
     );
 }
